@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -10,7 +14,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "CLIENT_ID", localProperties['CLIENT_ID']
+        buildConfigField "String", "REDIRECT_URI", localProperties['REDIRECT_URI']
     }
+
     buildTypes {
         release {
             minifyEnabled false
